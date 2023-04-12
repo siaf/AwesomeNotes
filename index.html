@@ -1,119 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Markdown Editor</title>
+  <meta charset="UTF-8">
+  <title>Editor.js Markdown Editor Example</title>
+
+  <!-- Include Editor.js styles -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest/dist/editorjs.min.css">
-  <style>
-    /* Style the preview element */
-    #markdown-preview {
-      padding: 1em;
-      background-color: #f7f7f7;
-      border: 1px solid #ddd;
-      margin-top: 1em;
-    }
-    #markdown-preview .markdown-body {
-      padding: 0;
-    }
 
-    /* Hide the editor by default */
-    #markdown-editor {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div id="editorjs"></div>
-  <div id="preview-container">
-    <div id="markdown-preview"></div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    // Initialize Editor.js
-    var editor = new EditorJS({
-      holder: 'editorjs',
-      autofocus: true,
-      tools: {
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-        },
-        list: {
-          class: List,
-          inlineToolbar: true,
-        },
-        image: {
-          class: ImageTool,
-          config: {
-            endpoints: {
-              byFile: 'https://api.imgbb.com/1/upload?key=API_KEY',
-              byUrl: 'https://api.imgbb.com/1/upload?key=API_KEY',
+  <!-- Include Editor.js library -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+
+  <!-- Import Editor.js tools using ES6 module syntax -->
+  <script type="module">
+    import EditorJS from '@editorjs/editorjs';
+    import Header from '@editorjs/header';
+    import List from '@editorjs/list';
+    import CodeTool from '@editorjs/code';
+    import ImageTool from '@editorjs/image';
+
+    // Initialize the editor when the page has finished loading
+    window.addEventListener('load', () => {
+      const editor = new EditorJS({
+        holder: 'editor',
+        tools: {
+          header: {
+            class: Header,
+            inlineToolbar: true,
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+          },
+          code: {
+            class: CodeTool,
+            shortcut: 'CMD+SHIFT+D',
+          },
+          image: {
+            class: ImageTool,
+            config: {
+              endpoints: {
+                byFile: 'https://api.imgbb.com/1/upload?key=API_KEY',
+                byUrl: 'https://api.imgbb.com/1/upload?key=API_KEY',
+              },
             },
           },
         },
-        header: {
-          class: Header,
-          inlineToolbar: true,
-        },
-        delimiter: Delimiter,
-        quote: Quote,
-        code: {
-          class: CodeTool,
-          shortcut: 'CMD+SHIFT+D',
-        },
-      },
-      data: {
-        blocks: [
-          {
-            type: 'header',
-            data: {
-              text: 'Markdown Preview',
-              level: 2,
-            },
-          },
-          {
-            type: 'paragraph',
-            data: {
-              text: 'Click here to edit.',
-            },
-          },
-        ],
-      },
-    });
-
-    // Preview Markdown content
-    var preview = document.getElementById("markdown-preview");
-
-    // Enable editing in preview mode
-    preview.addEventListener("click", function(){
-      preview.style.display = "none";
-      editor.isReady.then(() => {
-        editor.save().then((outputData) => {
-          var markdown = outputData.blocks.map(block => {
-            switch (block.type) {
-              case 'paragraph':
-                return block.data.text;
-              case 'header':
-                return `${'#'.repeat(block.data.level)} ${block.data.text}`;
-              case 'list':
-                return block.data.items.map(item => `- ${item}`).join('\n');
-              case 'quote':
-                return `> ${block.data.text}`;
-              case 'code':
-                return `\`\`\`${block.data.language}\n${block.data.code}\n\`\`\``;
-              default:
-                return '';
-            }
-          }).join('\n\n');
-          var html = marked(markdown);
-          document.getElementById("markdown-preview").innerHTML = `<div class="markdown-body">${html}</div>`;
-          document.getElementById("editorjs").style.display = "none";
-          document.getElementById("preview-container").style.display = "block";
-        }).catch((error) => {
-          console.log('Error saving Editor.js data', error);
-        });
       });
     });
   </script>
+</head>
+<body>
+  <!-- Define a container for the editor -->
+  <div id="editor"></div>
 </body>
 </html>
