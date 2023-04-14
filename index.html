@@ -88,238 +88,17 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
-  
+
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-mermaid@latest"></script>
   <!-- Load Editor.js's Core -->
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 
+  <script src="js/ChartBlock.js"></script>
+  <script src="js/SWOTBlock.js"></script>
+  <script src="js/MermaidBlock.js"></script>
+
   <!-- Initialization -->
   <script>
-    class MermaidBlock {
-  static get toolbox() {
-    return {
-      title: 'Mermaid',
-      icon: '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0a12 12 0 1012 12A12 12 0 0012 0zm2.34 19.46h-.08l-2.42-3.85h-3.7l3.55-5.37L6 8.44l3.3 5.2h4.11l2.43 3.82h3.7l-3.56 5.38 5.37-1.76z"/></svg>'
-    };
-  }
-
-  static get isReadOnlySupported() {
-    return true;
-  }
-
-  constructor({ data }) {
-    this.data = data || {  mermaidCode:' graph TD;      A-->B;      A-->C;      B-->D;      C-->D;'};
-
-        if(this.data.mermaidCode == undefined){
-          this.data.mermaidCode = ' graph TD;      A-->B;      A-->C;      B-->D;      C-->D;';
-        };
-  }
-
-  render() {
-    const container = document.createElement('div');
-    const editor = document.createElement('textarea');
-    
-    editor.innerHTML = this.data.mermaidCode || '';
-    container.appendChild(editor);
-
-    const mermaid = window.mermaid;
-    
-    mermaid.initialize({
-      startOnLoad: false,
-    });
-
-    const preview = document.createElement('div');
-    container.appendChild(preview);
-
-    const renderMermaid = () => {
-      preview.innerHTML = '';
-      try {
-        mermaid.render('mermaid-preview', editor.value, (svg) => {
-          preview.innerHTML = svg;          
-        });
-      } catch (e) {
-        console.error(e);
-        preview.innerHTML = 'Error rendering Mermaid chart';
-      }
-    };
-
-    //editor.addEventListener('input', renderMermaid);
-
-    editor.addEventListener('input', () => {
-          this.data.mermaidCode = editor.value;
-          renderMermaid();
-        });
-    renderMermaid();
-
-    return container;
-  }
-
-  save(blockContent){
-    console.log('save:');
-    console.log(blockContent);
-    console.log(this.data);
-    const editor = blockContent.querySelector('textarea');
-    console.log(editor.value);
-    return this.data;
-    return {
-      mermaidCode: editor.value
-    }
-  }
-  
-}
-
-    class ChartBlock {
-      static get toolbox() {
-        return {
-          title: 'Chart',
-          icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="12" height="12" fill="#fff" stroke="#000"/><rect x="4" y="6" width="2" height="8" fill="#000"/><rect x="8" y="4" width="2" height="10" fill="#000"/><rect x="12" y="7" width="2" height="7" fill="#000"/></svg>'
-        };
-      }
-
-      static get isReadOnlySupported() {
-        return true;
-      }
-
-      static get sanitize() {
-        return {
-          data: {}
-        };
-      }
-
-      renderSettings() {
-        // This block doesn't have any additional settings
-        return null;
-      }
-
-      save(blockContent) {
-        // Save the chart data in the block's data property
-        return {
-          data: blockContent.innerHTML
-        };
-      }
-
-      render() {
-        // Render the block using Chart.js library
-        const chartCanvas = document.createElement('canvas');
-        const chartCtx = chartCanvas.getContext('2d');
-
-        // Example chart data (you can replace this with user inputs)
-        const chartData = {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'Dataset 1',
-            data: [10, 20, 30, 40, 50, 60, 70],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          }]
-        };
-
-        new Chart(chartCtx, {
-          type: 'bar',
-          data: chartData,
-          options: {}
-        });
-
-        // Add the canvas to the block content
-        const blockContent = document.createElement('div');
-        blockContent.appendChild(chartCanvas);
-
-        return blockContent;
-      }
-    }
-
-    class SwotBlock {
-      static get toolbox() {
-        return {
-          title: 'SWOT Block',
-          icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.05L3.53 6.81l1.94 3.36L12 4.78l6.53 5.39 1.94-3.36L12 2.05zm0 3.24l3.88 2.28-3.88 3.2-3.88-3.2 3.88-2.28zm-5.5 5.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5zm-11.5 6.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5z"/></svg>'
-        };
-      }
-
-      constructor({ data }) {
-        this.data = data || {
-          strength: '',
-          weakness: '',
-          opportunity: '',
-          threat: ''
-        };
-      }
-
-      static get isReadOnlySupported() {
-    return true;
-  }
-
-      render() {
-        const container = document.createElement('div');
-
-        const strengthInput = document.createElement('input');
-        strengthInput.setAttribute('type', 'text');
-        strengthInput.setAttribute('placeholder', 'Strength');
-        strengthInput.addEventListener('input', () => {
-          this.data.strength = strengthInput.value;
-          this._updateSVG(container, this.data);
-        });
-
-        const weaknessInput = document.createElement('input');
-        weaknessInput.setAttribute('type', 'text');
-        weaknessInput.setAttribute('placeholder', 'Weakness');
-        weaknessInput.addEventListener('input', () => {
-          this.data.weakness = weaknessInput.value;
-          this._updateSVG(container, this.data);
-        });
-
-        const opportunityInput = document.createElement('input');
-        opportunityInput.setAttribute('type', 'text');
-        opportunityInput.setAttribute('placeholder', 'Opportunity');
-        opportunityInput.addEventListener('input', () => {
-          this.data.opportunity = opportunityInput.value;
-          this._updateSVG(container, this.data);
-        });
-
-        const threatInput = document.createElement('input');
-        threatInput.setAttribute('type', 'text');
-        threatInput.setAttribute('placeholder', 'Threat');
-        threatInput.addEventListener('input', () => {
-          this.data.threat = threatInput.value;
-          this._updateSVG(container, this.data);
-        });
-
-        container.appendChild(strengthInput);
-        container.appendChild(weaknessInput);
-        container.appendChild(opportunityInput);
-        container.appendChild(threatInput);
-
-        this.svgContainer = document.createElement('div');
-        container.appendChild(this.svgContainer);
-
-        this._updateSVG(container, this.data);
-
-        return container;
-      }
-
-      _updateSVG(container, data) {
-        const svg = `
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="100" height="100" fill="#6CBEEB"/>
-        <rect x="100" y="0"width="100" height="100" fill="#FDB813"/>
-<rect x="0" y="100" width="100" height="100" fill="#E94B3C"/>
-<rect x="100" y="100" width="100" height="100" fill="#9ACD32"/>
-    <text x="10" y="60" font-size="10" fill="white">${data.strength}</text>
-    <text x="110" y="60" font-size="10" fill="white">${data.weakness}</text>
-    <text x="10" y="160" font-size="10" fill="white">${data.opportunity}</text>
-    <text x="110" y="160" font-size="10" fill="white">${data.threat}</text>
-  </svg>
-`;
-
-        this.svgContainer.innerHTML = svg;
-      }
-
-      save() {
-        console.log(this.data);
-        return this.data;
-      }
-    }
-
     /**
      * To initialize the Editor, create a new instance with configuration object
      * @see docs/installation.md for mode details
@@ -425,6 +204,8 @@
           class: MermaidBlock,
           inlineToolbar: true
         },
+        mermaid2: MermaidTool,
+        
       },
 
       /**
@@ -437,6 +218,20 @@
        */
       data: {
         blocks: [
+        {
+            type: "mermaid2",
+            data: {
+              mermaidCode:`sequenceDiagram
+    Alice ->> Bob: Hello Bob, how are you?
+    Bob-->>John: How about you John?
+    Bob--x Alice: I am good thanks!
+    Bob-x John: I am good thanks!
+    Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
+
+    Bob-->Alice: Checking with John...
+    Alice->John: Yes... John, how are you?`
+            }
+          },
           {
             type: "header",
             data: {
@@ -535,6 +330,17 @@
         ]
       },
       onReady: function () {
+
+    MermaidTool.config({ 'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#BB2528',
+      'primaryTextColor': '#fff',
+      'primaryBorderColor': '#7C0000',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#006100',
+      'tertiaryColor': '#fff'
+    } });
+
         saveButton.click();
       },
       onChange: function (api, event) {
