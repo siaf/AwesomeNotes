@@ -79,91 +79,78 @@
   static get toolbox() {
     return {
       title: 'SWOT Block',
-      icon: '<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 6h-4V4c0-.6-.4-1-1-1H9c-.6 0-1 .4-1 1v2H4c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h16c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1zm-7 0h-6V4h6v2zm6 14H5V8h14v12z"/></svg>'
+      icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.05L3.53 6.81l1.94 3.36L12 4.78l6.53 5.39 1.94-3.36L12 2.05zm0 3.24l3.88 2.28-3.88 3.2-3.88-3.2 3.88-2.28zm-5.5 5.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5zm-11.5 6.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5z"/></svg>'
     };
   }
 
-  constructor({data}) {
-    this.data = data;
-
-    this.svgContainer = null;
-
-    this.wrapper = document.createElement('div');
-    this.wrapper.classList.add('swot-block');
-
-    this.render();
+  constructor({ data }) {
+    this.data = data || {
+      strength: '',
+      weakness: '',
+      opportunity: '',
+      threat: ''
+    };
   }
 
   render() {
-    if (this.svgContainer) {
-      this.wrapper.removeChild(this.svgContainer);
-    }
+    const container = document.createElement('div');
 
-    if (this.data.editing) {
-      const strengthInput = document.createElement('input');
-      strengthInput.setAttribute('type', 'text');
-      strengthInput.setAttribute('placeholder', 'Strength');
-      strengthInput.addEventListener('input', (event) => {
-        this.data.strength = event.target.value;
-        this.renderSvg();
-      });
+    const strengthInput = document.createElement('input');
+    strengthInput.setAttribute('type', 'text');
+    strengthInput.setAttribute('placeholder', 'Strength');
+    strengthInput.addEventListener('input', () => {
+      this.data.strength = strengthInput.value;
+      this._updateSVG(container, this.data);
+    });
 
-      const weaknessInput = document.createElement('input');
-      weaknessInput.setAttribute('type', 'text');
-      weaknessInput.setAttribute('placeholder', 'Weakness');
-      weaknessInput.addEventListener('input', (event) => {
-        this.data.weakness = event.target.value;
-        this.renderSvg();
-      });
+    const weaknessInput = document.createElement('input');
+    weaknessInput.setAttribute('type', 'text');
+    weaknessInput.setAttribute('placeholder', 'Weakness');
+    weaknessInput.addEventListener('input', () => {
+      this.data.weakness = weaknessInput.value;
+      this._updateSVG(container, this.data);
+    });
 
-      const opportunityInput = document.createElement('input');
-      opportunityInput.setAttribute('type', 'text');
-      opportunityInput.setAttribute('placeholder', 'Opportunity');
-      opportunityInput.addEventListener('input', (event) => {
-        this.data.opportunity = event.target.value;
-        this.renderSvg();
-      });
+    const opportunityInput = document.createElement('input');
+    opportunityInput.setAttribute('type', 'text');
+    opportunityInput.setAttribute('placeholder', 'Opportunity');
+    opportunityInput.addEventListener('input', () => {
+      this.data.opportunity = opportunityInput.value;
+      this._updateSVG(container, this.data);
+    });
 
-      const threatInput = document.createElement('input');
-      threatInput.setAttribute('type', 'text');
-      threatInput.setAttribute('placeholder', 'Threat');
-      threatInput.addEventListener('input', (event) => {
-        this.data.threat = event.target.value;
-        this.renderSvg();
-      });
+    const threatInput = document.createElement('input');
+    threatInput.setAttribute('type', 'text');
+    threatInput.setAttribute('placeholder', 'Threat');
+    threatInput.addEventListener('input', () => {
+      this.data.threat = threatInput.value;
+      this._updateSVG(container, this.data);
+    });
 
-      const inputContainer = document.createElement('div');
-      inputContainer.classList.add('input-container');
-      inputContainer.appendChild(strengthInput);
-      inputContainer.appendChild(weaknessInput);
-      inputContainer.appendChild(opportunityInput);
-      inputContainer.appendChild(threatInput);
-
-      if (this.svgContainer instanceof Node) {
-  this.wrapper.appendChild(this.svgContainer);
-}
-
-    }
+    container.appendChild(strengthInput);
+    container.appendChild(weaknessInput);
+    container.appendChild(opportunityInput);
+    container.appendChild(threatInput);
 
     this.svgContainer = document.createElement('div');
-    this.svgContainer.classList.add('svg-container');
-    this.renderSvg();
-    this.wrapper.appendChild(this.svgContainer);
+    container.appendChild(this.svgContainer);
+
+    this._updateSVG(container, this.data);
+
+    return container;
   }
 
-  renderSvg() {
-    const data = this.data;
-
+  _updateSVG(container, data) {
     const svg = `
-      <svg viewBox="0 0 200 200">
-        <rect x="0" y="0" width="100" height="100" fill="#4A90E2"/>
-        <rect x="100" y="0" width="100" height="100" fill="#FDB813"/>
-        <rect x="0" y="100" width="100" height="100" fill="#FDB813"/>
-            <rect x="100" y="100" width="100" height="100" fill="#EF4A5A"/>
-    <text x="50" y="60" font-size="20" fill="#fff" text-anchor="middle">${data.strength || ''}</text>
-    <text x="150" y="60" font-size="20" fill="#000" text-anchor="middle">${data.weakness || ''}</text>
-    <text x="50" y="160" font-size="20" fill="#000" text-anchor="middle">${data.opportunity || ''}</text>
-    <text x="150" y="160" font-size="20" fill="#fff" text-anchor="middle">${data.threat || ''}</text>
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="100" height="100" fill="#6CBEEB"/>
+        <rect x="100" y="0"width="100" height="100" fill="#FDB813"/>
+<rect x="0" y="100" width="100" height="100" fill="#E94B3C"/>
+<rect x="100" y="100" width="100" height="100" fill="#9ACD32"/>
+    <text x="10" y="60" font-size="18" fill="white">${data.strength}</text>
+    <text x="110" y="60" font-size="18" fill="white">${data.weakness}</text>
+    <text x="10" y="160" font-size="18" fill="white">${data.opportunity}</text>
+    <text x="110" y="160" font-size="18" fill="white">${data.threat}</text>
   </svg>
 `;
 
@@ -171,44 +158,9 @@ this.svgContainer.innerHTML = svg;
 }
 
 save() {
-return {
-data: {
-...this.data,
-editing: false
-}
-};
-}
-
-static get isReadOnlySupported() {
-return true;
-}
-
-renderReadOnly() {
-this.renderSvg();
-return this.wrapper;
-}
-
-static get enableLineBreaks() {
-return true;
-}
-
-static get sanitize() {
-return {
-strength: {},
-weakness: {},
-opportunity: {},
-threat: {},
-editing: {}
-};
-}
-
-static get pasteConfig() {
-return {
-tags: ['div']
-};
+return this.data;
 }
 }
-
     
     /**
      * To initialize the Editor, create a new instance with configuration object
