@@ -139,7 +139,10 @@
       inputContainer.appendChild(opportunityInput);
       inputContainer.appendChild(threatInput);
 
-      this.wrapper.appendChild(inputContainer);
+      if (this.svgContainer instanceof Node) {
+  this.wrapper.appendChild(this.svgContainer);
+}
+
     }
 
     this.svgContainer = document.createElement('div');
