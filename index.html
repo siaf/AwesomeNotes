@@ -429,12 +429,18 @@ const sidebarInput = document.getElementById('sidebar-input');
 addToEditorBtn.addEventListener('click', function() {
   const enteredText = sidebarInput.value;
   
-  // Add the entered text to the editor.js block
-  editor.blocks.insert('paragraph', { text: enteredText });
+  const currentBlock = editor.blocks.getCurrentBlock();
+  
+  if (currentBlock) {
+    editor.blocks.update(currentBlock.clientId, { text: currentBlock.text + ' ' + enteredText });
+  } else {
+    editor.blocks.insert('paragraph', { text: enteredText });
+  }
   
   // Clear the input field
   sidebarInput.value = '';
 });
+
 
   </script>
 </body>
