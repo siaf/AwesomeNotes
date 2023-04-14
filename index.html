@@ -21,7 +21,21 @@
       </div>
     </div>
     <div class="ce-example__content _ce-example__content--small">
+      <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="sidebar-input">Enter text:</label>
+        <input type="text" class="form-control" id="sidebar-input" placeholder="Type here">
+      </div>
+      <button class="btn btn-primary" id="add-to-editor-btn">Add to editor</button>
+    </div>
+    <div class="col-md-9">
       <div id="editorjs"></div>
+    </div>
+  </div>
+</div>
+
 
       <div class="ce-example__button" id="saveButton">
         editor.save()
@@ -408,6 +422,20 @@ return this.data;
 
       readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
     });
+    
+    const addToEditorBtn = document.getElementById('add-to-editor-btn');
+const sidebarInput = document.getElementById('sidebar-input');
+
+addToEditorBtn.addEventListener('click', function() {
+  const enteredText = sidebarInput.value;
+  
+  // Add the entered text to the editor.js block
+  editor.blocks.insert('paragraph', { text: enteredText });
+  
+  // Clear the input field
+  sidebarInput.value = '';
+});
+
   </script>
 </body>
 </html>
