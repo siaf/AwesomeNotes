@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Editor.js 🤩🧦🤨 example</title>
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
   <link href="assets/demo.css" rel="stylesheet">
-  <script src="assets/json-preview.js"></script>
+  <script src="assets/jason-preview.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
+
 <body>
   <div class="ce-example">
     <div class="ce-example__header">
@@ -22,19 +24,19 @@
     </div>
     <div class="ce-example__content _ce-example__content--small">
       <div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="form-group">
-        <label for="sidebar-input">Enter text:</label>
-        <input type="text" class="form-control" id="sidebar-input" placeholder="Type here">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="sidebar-input">Enter text:</label>
+              <input type="text" class="form-control" id="sidebar-input" placeholder="Type here">
+            </div>
+            <button class="btn btn-primary" id="add-to-editor-btn">Add to editor</button>
+          </div>
+          <div class="col-md-9">
+            <div id="editorjs"></div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary" id="add-to-editor-btn">Add to editor</button>
-    </div>
-    <div class="col-md-9">
-      <div id="editorjs"></div>
-    </div>
-  </div>
-</div>
 
 
       <div class="ce-example__button" id="saveButton">
@@ -83,140 +85,140 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script><!-- Marker -->
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script><!-- Inline Code -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Load Editor.js's Core -->
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 
   <!-- Initialization -->
   <script>
-    class ChartBlock  {
-  static get toolbox() {
-    return {
-      title: 'Chart',
-      icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="12" height="12" fill="#fff" stroke="#000"/><rect x="4" y="6" width="2" height="8" fill="#000"/><rect x="8" y="4" width="2" height="10" fill="#000"/><rect x="12" y="7" width="2" height="7" fill="#000"/></svg>'
-    };
-  }
+    class ChartBlock {
+      static get toolbox() {
+        return {
+          title: 'Chart',
+          icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="12" height="12" fill="#fff" stroke="#000"/><rect x="4" y="6" width="2" height="8" fill="#000"/><rect x="8" y="4" width="2" height="10" fill="#000"/><rect x="12" y="7" width="2" height="7" fill="#000"/></svg>'
+        };
+      }
 
-  static get isReadOnlySupported() {
-    return true;
-  }
+      static get isReadOnlySupported() {
+        return true;
+      }
 
-  static get sanitize() {
-    return {
-      data: {}
-    };
-  }
+      static get sanitize() {
+        return {
+          data: {}
+        };
+      }
 
-  renderSettings() {
-    // This block doesn't have any additional settings
-    return null;
-  }
+      renderSettings() {
+        // This block doesn't have any additional settings
+        return null;
+      }
 
-  save(blockContent) {
-    // Save the chart data in the block's data property
-    return {
-      data: blockContent.innerHTML
-    };
-  }
+      save(blockContent) {
+        // Save the chart data in the block's data property
+        return {
+          data: blockContent.innerHTML
+        };
+      }
 
-  render() {
-    // Render the block using Chart.js library
-    const chartCanvas = document.createElement('canvas');
-    const chartCtx = chartCanvas.getContext('2d');
+      render() {
+        // Render the block using Chart.js library
+        const chartCanvas = document.createElement('canvas');
+        const chartCtx = chartCanvas.getContext('2d');
 
-    // Example chart data (you can replace this with user inputs)
-    const chartData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'Dataset 1',
-        data: [10, 20, 30, 40, 50, 60, 70],
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }]
-    };
+        // Example chart data (you can replace this with user inputs)
+        const chartData = {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+            label: 'Dataset 1',
+            data: [10, 20, 30, 40, 50, 60, 70],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          }]
+        };
 
-    new Chart(chartCtx, {
-      type: 'bar',
-      data: chartData,
-      options: {}
-    });
+        new Chart(chartCtx, {
+          type: 'bar',
+          data: chartData,
+          options: {}
+        });
 
-    // Add the canvas to the block content
-    const blockContent = document.createElement('div');
-    blockContent.appendChild(chartCanvas);
+        // Add the canvas to the block content
+        const blockContent = document.createElement('div');
+        blockContent.appendChild(chartCanvas);
 
-    return blockContent;
-  }
-}
+        return blockContent;
+      }
+    }
 
     class SwotBlock {
-  static get toolbox() {
-    return {
-      title: 'SWOT Block',
-      icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.05L3.53 6.81l1.94 3.36L12 4.78l6.53 5.39 1.94-3.36L12 2.05zm0 3.24l3.88 2.28-3.88 3.2-3.88-3.2 3.88-2.28zm-5.5 5.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5zm-11.5 6.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5z"/></svg>'
-    };
-  }
+      static get toolbox() {
+        return {
+          title: 'SWOT Block',
+          icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.05L3.53 6.81l1.94 3.36L12 4.78l6.53 5.39 1.94-3.36L12 2.05zm0 3.24l3.88 2.28-3.88 3.2-3.88-3.2 3.88-2.28zm-5.5 5.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5zm-11.5 6.5l1.5 2.6 2.5-1.5-1.5-2.6-2.5 1.5zm11.5 0l-1.5-2.6-2.5 1.5 1.5 2.6 2.5-1.5z"/></svg>'
+        };
+      }
 
-  constructor({ data }) {
-    this.data = data || {
-      strength: '',
-      weakness: '',
-      opportunity: '',
-      threat: ''
-    };
-  }
+      constructor({ data }) {
+        this.data = data || {
+          strength: '',
+          weakness: '',
+          opportunity: '',
+          threat: ''
+        };
+      }
 
-  render() {
-    const container = document.createElement('div');
+      render() {
+        const container = document.createElement('div');
 
-    const strengthInput = document.createElement('input');
-    strengthInput.setAttribute('type', 'text');
-    strengthInput.setAttribute('placeholder', 'Strength');
-    strengthInput.addEventListener('input', () => {
-      this.data.strength = strengthInput.value;
-      this._updateSVG(container, this.data);
-    });
+        const strengthInput = document.createElement('input');
+        strengthInput.setAttribute('type', 'text');
+        strengthInput.setAttribute('placeholder', 'Strength');
+        strengthInput.addEventListener('input', () => {
+          this.data.strength = strengthInput.value;
+          this._updateSVG(container, this.data);
+        });
 
-    const weaknessInput = document.createElement('input');
-    weaknessInput.setAttribute('type', 'text');
-    weaknessInput.setAttribute('placeholder', 'Weakness');
-    weaknessInput.addEventListener('input', () => {
-      this.data.weakness = weaknessInput.value;
-      this._updateSVG(container, this.data);
-    });
+        const weaknessInput = document.createElement('input');
+        weaknessInput.setAttribute('type', 'text');
+        weaknessInput.setAttribute('placeholder', 'Weakness');
+        weaknessInput.addEventListener('input', () => {
+          this.data.weakness = weaknessInput.value;
+          this._updateSVG(container, this.data);
+        });
 
-    const opportunityInput = document.createElement('input');
-    opportunityInput.setAttribute('type', 'text');
-    opportunityInput.setAttribute('placeholder', 'Opportunity');
-    opportunityInput.addEventListener('input', () => {
-      this.data.opportunity = opportunityInput.value;
-      this._updateSVG(container, this.data);
-    });
+        const opportunityInput = document.createElement('input');
+        opportunityInput.setAttribute('type', 'text');
+        opportunityInput.setAttribute('placeholder', 'Opportunity');
+        opportunityInput.addEventListener('input', () => {
+          this.data.opportunity = opportunityInput.value;
+          this._updateSVG(container, this.data);
+        });
 
-    const threatInput = document.createElement('input');
-    threatInput.setAttribute('type', 'text');
-    threatInput.setAttribute('placeholder', 'Threat');
-    threatInput.addEventListener('input', () => {
-      this.data.threat = threatInput.value;
-      this._updateSVG(container, this.data);
-    });
+        const threatInput = document.createElement('input');
+        threatInput.setAttribute('type', 'text');
+        threatInput.setAttribute('placeholder', 'Threat');
+        threatInput.addEventListener('input', () => {
+          this.data.threat = threatInput.value;
+          this._updateSVG(container, this.data);
+        });
 
-    container.appendChild(strengthInput);
-    container.appendChild(weaknessInput);
-    container.appendChild(opportunityInput);
-    container.appendChild(threatInput);
+        container.appendChild(strengthInput);
+        container.appendChild(weaknessInput);
+        container.appendChild(opportunityInput);
+        container.appendChild(threatInput);
 
-    this.svgContainer = document.createElement('div');
-    container.appendChild(this.svgContainer);
+        this.svgContainer = document.createElement('div');
+        container.appendChild(this.svgContainer);
 
-    this._updateSVG(container, this.data);
+        this._updateSVG(container, this.data);
 
-    return container;
-  }
+        return container;
+      }
 
-  _updateSVG(container, data) {
-    const svg = `
+      _updateSVG(container, data) {
+        const svg = `
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="100" height="100" fill="#6CBEEB"/>
         <rect x="100" y="0"width="100" height="100" fill="#FDB813"/>
@@ -229,14 +231,14 @@
   </svg>
 `;
 
-this.svgContainer.innerHTML = svg;
-}
+        this.svgContainer.innerHTML = svg;
+      }
 
-save() {
-return this.data;
-}
-}
-    
+      save() {
+        return this.data;
+      }
+    }
+
     /**
      * To initialize the Editor, create a new instance with configuration object
      * @see docs/installation.md for mode details
@@ -305,12 +307,12 @@ return this.data;
         warning: Warning,
 
         marker: {
-          class:  Marker,
+          class: Marker,
           shortcut: 'CMD+SHIFT+M'
         },
 
         code: {
-          class:  CodeTool,
+          class: CodeTool,
           shortcut: 'CMD+SHIFT+C'
         },
 
@@ -330,10 +332,14 @@ return this.data;
           inlineToolbar: true,
           shortcut: 'CMD+ALT+T'
         },
- swot: {
-      class: SwotBlock,
-      inlineToolbar: true
-    },
+        swot: {
+          class: SwotBlock,
+          inlineToolbar: true
+        },
+        chart: {
+          class: ChartBlock,
+          inlineToolbar: true
+        },
       },
 
       /**
@@ -354,9 +360,9 @@ return this.data;
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
+            type: 'paragraph',
+            data: {
+              text: 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
             }
           },
           {
@@ -367,9 +373,9 @@ return this.data;
             }
           },
           {
-            type : 'list',
-            data : {
-              items : [
+            type: 'list',
+            data: {
+              items: [
                 'It is a block-styled editor',
                 'It returns clean data output in JSON',
                 'Designed to be extendable and pluggable with a simple API',
@@ -385,15 +391,15 @@ return this.data;
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
+            type: 'paragraph',
+            data: {
+              text: 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : `There are dozens of <a href="https://github.com/editor-js">ready-to-use Blocks</a> and the <a href="https://editorjs.io/creating-a-block-tool">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.`
+            type: 'paragraph',
+            data: {
+              text: `There are dozens of <a href="https://github.com/editor-js">ready-to-use Blocks</a> and the <a href="https://editorjs.io/creating-a-block-tool">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.`
             }
           },
           {
@@ -404,37 +410,37 @@ return this.data;
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
+            type: 'paragraph',
+            data: {
+              text: 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : `Given data can be used as you want: render with HTML for <code class="inline-code">Web clients</code>, render natively for <code class="inline-code">mobile apps</code>, create markup for <code class="inline-code">Facebook Instant Articles</code> or <code class="inline-code">Google AMP</code>, generate an <code class="inline-code">audio version</code> and so on.`
+            type: 'paragraph',
+            data: {
+              text: `Given data can be used as you want: render with HTML for <code class="inline-code">Web clients</code>, render natively for <code class="inline-code">mobile apps</code>, create markup for <code class="inline-code">Facebook Instant Articles</code> or <code class="inline-code">Google AMP</code>, generate an <code class="inline-code">audio version</code> and so on.`
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Clean data is useful to sanitize, validate and process on the backend.'
+            type: 'paragraph',
+            data: {
+              text: 'Clean data is useful to sanitize, validate and process on the backend.'
             }
           },
           {
-            type : 'delimiter',
-            data : {}
+            type: 'delimiter',
+            data: {}
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
+            type: 'paragraph',
+            data: {
+              text: 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
             }
           },
           {
             type: 'image',
             data: {
-              url: 'assets/codex2x.png',
+              url: 'assets/sample-image.png',
               caption: '',
               stretched: false,
               withBorder: true,
@@ -443,14 +449,13 @@ return this.data;
           },
         ]
       },
-      onReady: function(){
+      onReady: function () {
         saveButton.click();
       },
-      onChange: function(api, event) {
+      onChange: function (api, event) {
         console.log('something changed', event);
       }
     });
-    editor.BlockManager.registerBlockType('chart', ChartBlock);
 
 
     /**
@@ -485,26 +490,27 @@ return this.data;
 
       readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
     });
-    
-    const addToEditorBtn = document.getElementById('add-to-editor-btn');
-const sidebarInput = document.getElementById('sidebar-input');
 
-addToEditorBtn.addEventListener('click', function() {
-  const enteredText = sidebarInput.value;
-  
-  const currentBlock = editor.blocks.getCurrentBlock();
-  
-  if (currentBlock) {
-    editor.blocks.update(currentBlock.clientId, { text: currentBlock.text + ' ' + enteredText });
-  } else {
-    editor.blocks.insert('paragraph', { text: enteredText });
-  }
-  
-  // Clear the input field
-  sidebarInput.value = '';
-});
+    const addToEditorBtn = document.getElementById('add-to-editor-btn');
+    const sidebarInput = document.getElementById('sidebar-input');
+
+    addToEditorBtn.addEventListener('click', function () {
+      const enteredText = sidebarInput.value;
+
+      const currentBlock = editor.blocks.getCurrentBlock();
+
+      if (currentBlock) {
+        editor.blocks.update(currentBlock.clientId, { text: currentBlock.text + ' ' + enteredText });
+      } else {
+        editor.blocks.insert('paragraph', { text: enteredText });
+      }
+
+      // Clear the input field
+      sidebarInput.value = '';
+    });
 
 
   </script>
 </body>
+
 </html>
