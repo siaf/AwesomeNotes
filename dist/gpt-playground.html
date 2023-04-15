@@ -2,18 +2,21 @@
 <html>
 <head>
 	<title>ChatGPT API Test</title>
-<script defer src="bundle-4528e71f98667285ae93.js"></script></head>
+</head>
 <body>
 	<h1>ChatGPT API Test</h1>
 	<p>Enter your API key:</p>
 	<input type="text" id="apiKey">
+	<p>Enter your prompt:</p>
+	<textarea id="prompt" rows="4" cols="50"></textarea>
 	<button onclick="requestChat()">Request Chat</button>
 	<div id="chatOutput"></div>
 
 	<script>
 		function requestChat() {
-			// Get the API key from the input element
+			// Get the API key and prompt from the input elements
 			const apiKey = document.getElementById("apiKey").value;
+			const prompt = document.getElementById("prompt").value;
 
 			// Make the request to the OpenAI API
 			fetch("https://api.openai.com/v1/engine/davinci-codex/completions", {
@@ -23,9 +26,10 @@
 					"Authorization": "Bearer " + apiKey
 				},
 				body: JSON.stringify({
-					prompt: "Hello, World!",
+					prompt: prompt,
 					max_tokens: 10
-				})
+				}),
+				mode: "cors"
 			})
 			.then(response => response.json())
 			.then(data => {
