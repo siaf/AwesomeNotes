@@ -89,3 +89,5 @@ class SwotBlock {
       return this.data;
     }
   }
+
+  export default SwotBlock;

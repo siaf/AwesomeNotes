@@ -1,3 +1,5 @@
+import Chart from 'chart.js/auto';
+
 class ChartBlock {
     static get toolbox() {
       return {
@@ -58,3 +60,5 @@ class ChartBlock {
       return blockContent;
     }
   }
+
+  export default ChartBlock;

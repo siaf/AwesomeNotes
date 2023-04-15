@@ -25,7 +25,7 @@ class MermaidBlock {
       editor.innerHTML = this.data.mermaidCode || '';
       container.appendChild(editor);
   
-      const mermaid = window.mermaid;
+      
       
       mermaid.initialize({
         startOnLoad: false,
@@ -70,3 +70,5 @@ class MermaidBlock {
     }
     
   }
+  
+  export default MermaidBlock;

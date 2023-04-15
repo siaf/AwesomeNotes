@@ -43,3 +43,5 @@ const cPreview = (function (module) {
 
   return module;
 })({});
+
+export default cPreview;
