@@ -6,7 +6,6 @@ import Quote from '@editorjs/quote';
 import SimpleImage from '@editorjs/simple-image';
 import Delimiter from '@editorjs/delimiter';
 import InlineCode from '@editorjs/inline-code';
-import Code from '@editorjs/code';
 import Marker from '@editorjs/marker';
 import LinkTool from '@editorjs/link';
 import Embed from '@editorjs/embed';
