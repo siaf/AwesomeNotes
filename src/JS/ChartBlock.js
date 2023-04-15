@@ -36,7 +36,7 @@ class ChartBlock {
       const chartCtx = chartCanvas.getContext('2d');
 
       // Example chart data (you can replace this with user inputs)
-      const chartData = {
+      const chartData2 = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
           label: 'Dataset 1',
@@ -46,6 +46,18 @@ class ChartBlock {
           borderWidth: 1
         }]
       };
+
+      const chartData = {
+        labels: ['United States', 'China', 'Japan', 'Germany', 'United Kingdom', 'India', 'France', 'Italy', 'Brazil', 'Canada'],
+        datasets: [{
+          label: 'GDP (trillions of USD)',
+          data: [22.67, 16.35, 5.15, 4.24, 2.96, 2.87, 2.71, 2.07, 1.87, 1.65],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      };
+      
 
       new Chart(chartCtx, {
         type: 'bar',

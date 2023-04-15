@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatGPT API Test</title>
+<script defer src="bundle-4528e71f98667285ae93.js"></script></head>
+<body>
+	<h1>ChatGPT API Test</h1>
+	<p>Enter your API key:</p>
+	<input type="text" id="apiKey">
+	<button onclick="requestChat()">Request Chat</button>
+	<div id="chatOutput"></div>
+
+	<script>
+		function requestChat() {
+			// Get the API key from the input element
+			const apiKey = document.getElementById("apiKey").value;
+
+			// Make the request to the OpenAI API
+			fetch("https://api.openai.com/v1/engine/davinci-codex/completions", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": "Bearer " + apiKey
+				},
+				body: JSON.stringify({
+					prompt: "Hello, World!",
+					max_tokens: 10
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				// Display the response on the page
+				document.getElementById("chatOutput").innerHTML = data.choices[0].text;
+			})
+			.catch(error => {
+				console.error(error);
+				alert("An error occurred while making the request. Please check your API key and try again.");
+			});
+		}
+	</script>
+</body>
+</html>

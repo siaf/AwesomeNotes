@@ -59,6 +59,11 @@ module.exports = {
             filename: 'index.html',
             template: path.resolve(__dirname, 'src', 'index.html')
         }),
+        new HtmlWebpackPlugin({
+            title: 'Webpack App',
+            filename: 'gpt-playground.html',
+            template: path.resolve(__dirname, 'src', 'gpt-playground.html')
+        }),
         //new BundleAnalyzerPlugin()
     ]
 };

@@ -212,11 +212,21 @@ var ChartBlock = /*#__PURE__*/function () {
       var chartCtx = chartCanvas.getContext('2d');
 
       // Example chart data (you can replace this with user inputs)
-      var chartData = {
+      var chartData2 = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
           label: 'Dataset 1',
           data: [10, 20, 30, 40, 50, 60, 70],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      };
+      var chartData = {
+        labels: ['United States', 'China', 'Japan', 'Germany', 'United Kingdom', 'India', 'France', 'Italy', 'Brazil', 'Canada'],
+        datasets: [{
+          label: 'GDP (trillions of USD)',
+          data: [22.67, 16.35, 5.15, 4.24, 2.96, 2.87, 2.71, 2.07, 1.87, 1.65],
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
@@ -16300,6 +16310,178 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+var docData = {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Editor.js",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Key features",
+      level: 3
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['It is a block-styled editor', 'It returns clean data output in JSON', 'Designed to be extendable and pluggable with a simple API'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "What does it mean «block-styled editor»",
+      level: 3
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "There are dozens of <a href=\"https://github.com/editor-js\">ready-to-use Blocks</a> and the <a href=\"https://editorjs.io/creating-a-block-tool\">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "What does it mean clean data output",
+      level: 3
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Given data can be used as you want: render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on."
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'Clean data is useful to sanitize, validate and process on the backend.'
+    }
+  }, {
+    type: 'delimiter',
+    data: {}
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
+    }
+  }, {
+    type: 'image',
+    data: {
+      url: _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_20__,
+      caption: '',
+      stretched: false,
+      withBorder: true,
+      withBackground: false
+    }
+  }, {
+    type: "mermaid2",
+    data: {
+      mermaidCode: "sequenceDiagram\nAlice ->> Bob: Hello Bob, how are you?\nBob-->>John: How about you John?\nBob--x Alice: I am good thanks!\nBob-x John: I am good thanks!\nNote right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.\n\nBob-->Alice: Checking with John...\nAlice->John: Yes... John, how are you?",
+      caption: "Mermaid Diagram"
+    }
+  }]
+};
+var docData = {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Executive Summary",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The executive summary should provide an overview of your business and your plans. It should briefly describe your company, the problem you're solving, your target market, and the unique value proposition that sets your company apart from competitors."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Market Analysis",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The market analysis should describe your industry and market. It should include information on market size, growth potential, trends, and competitive landscape. It should also provide details on your target market, including demographics, psychographics, and buying behavior."
+    }
+  }, {
+    type: 'header',
+    data: {
+      text: 'Competitive Analysis',
+      level: 3
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'The competitive analysis should provide a detailed look at your competitors. It should describe their strengths and weaknesses, market share, and strategies. It should also explain how your company is different and why customers should choose your company over competitors.'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Marketing Strategy",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The marketing strategy should explain how you plan to reach your target market and achieve your business goals. It should include details on your pricing, promotion, and distribution strategies. It should also describe how you plan to measure the effectiveness of your marketing efforts."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Sales Strategy",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The sales strategy should describe how you plan to sell your product or service. It should include details on your sales channels, sales team, and sales process. It should also explain how you plan to measure the effectiveness of your sales efforts."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Operations",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The operations section should describe how your business will operate. It should include details on your production process, supply chain, and inventory management. It should also describe how you plan to manage your employees and any regulatory or legal considerations."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Financial Plan",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The financial plan should provide details on your company's finances. It should include a projected income statement, balance sheet, and cash flow statement. It should also explain how you plan to fund your business and achieve profitability."
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Projected income statement', 'Projected balance sheet', 'Projected cash flow statement', 'Funding plan', 'Profitability plan'],
+      style: 'unordered'
+    }
+  }]
+};
 
 /**
      * To initialize the Editor, create a new instance with configuration object
@@ -16402,92 +16584,7 @@ var editor = new (_editorjs_editorjs__WEBPACK_IMPORTED_MODULE_0___default())({
   /**
    * Initial Editor data
    */
-  data: {
-    blocks: [{
-      type: "mermaid2",
-      data: {
-        mermaidCode: "sequenceDiagram\n  Alice ->> Bob: Hello Bob, how are you?\n  Bob-->>John: How about you John?\n  Bob--x Alice: I am good thanks!\n  Bob-x John: I am good thanks!\n  Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.\n\n  Bob-->Alice: Checking with John...\n  Alice->John: Yes... John, how are you?",
-        caption: "Mermaid Diagram"
-      }
-    }, {
-      type: "header",
-      data: {
-        text: "Editor.js",
-        level: 2
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
-      }
-    }, {
-      type: "header",
-      data: {
-        text: "Key features",
-        level: 3
-      }
-    }, {
-      type: 'list',
-      data: {
-        items: ['It is a block-styled editor', 'It returns clean data output in JSON', 'Designed to be extendable and pluggable with a simple API'],
-        style: 'unordered'
-      }
-    }, {
-      type: "header",
-      data: {
-        text: "What does it mean «block-styled editor»",
-        level: 3
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: "There are dozens of <a href=\"https://github.com/editor-js\">ready-to-use Blocks</a> and the <a href=\"https://editorjs.io/creating-a-block-tool\">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games."
-      }
-    }, {
-      type: "header",
-      data: {
-        text: "What does it mean clean data output",
-        level: 3
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: "Given data can be used as you want: render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on."
-      }
-    }, {
-      type: 'paragraph',
-      data: {
-        text: 'Clean data is useful to sanitize, validate and process on the backend.'
-      }
-    }, {
-      type: 'delimiter',
-      data: {}
-    }, {
-      type: 'paragraph',
-      data: {
-        text: 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
-      }
-    }, {
-      type: 'image',
-      data: {
-        url: _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_20__,
-        caption: '',
-        stretched: false,
-        withBorder: true,
-        withBackground: false
-      }
-    }]
-  },
+  data: docData,
   onReady: function onReady() {
     _JS_MermaidTool__WEBPACK_IMPORTED_MODULE_17__["default"].config({
       'theme': 'base',
@@ -16570,4 +16667,4 @@ addToEditorBtn.addEventListener('click', function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle-76baf0c8e13d3d28c5b4.js.map
+//# sourceMappingURL=bundle-4528e71f98667285ae93.js.map
