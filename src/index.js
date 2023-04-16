@@ -20,6 +20,7 @@ import MermaidBlock from './JS/MermaidBlock';
 import MermaidTool from './JS/MermaidTool';
 
 import TuneRewrite from './JS/TuneRewrite';
+import TuneAI from './JS/TuneAI';
 
 import cPreview from './JS/jason-preview';
 
@@ -255,15 +256,47 @@ var editor = new EditorJS({
       inlineToolbar: true
     },
     mermaid2: MermaidTool,
-    TuneRewrite: TuneRewrite
+
+    /* custom Tune Menus */
+    TuneAIRewrite: {
+      class: TuneRewrite,
+      config: {
+        icon: "edit_square", label: 'Rewrite [AI]'
+      }
+    },
+    TuneAISimplify: {
+      class: TuneAI,
+      config: {
+        icon: "unfold_less_double", label: 'Simplify [AI]', promptPrefix: 'Simplify this'
+      }
+    },
+    TuneAIExpand: {
+      class: TuneAI,
+      config: {
+        icon: "unfold_more_double", label: 'Expand [AI]', promptPrefix: 'Expand this'
+      }
+    },
+    TuneAISuggestions: {
+      class: TuneAI,
+      config: {
+        icon: "assistant", label: 'Suggestions [AI]', promptPrefix: 'Suggest Improvements for this'
+      }
+    },
+    TuneAIReview: {
+      class: TuneAI,
+      config: {
+        icon: "rate_review", label: 'Review [AI]', promptPrefix: 'Review this'
+      }
+    },
   },
+
 
   /**
    * This Tool will be used as default
    */
   // defaultBlock: 'paragraph',
 
-  tunes: ['TuneRewrite'],
+  tunes: ['TuneAIRewrite', 'TuneAISimplify', 'TuneAIExpand', 'TuneAIReview', 'TuneAISuggestions'],
   /**
    * Initial Editor data
    */
@@ -324,57 +357,15 @@ toggleReadOnlyButton.addEventListener('click', async () => {
   readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
 });
 
+
+/* generate document template */
+
 const addToEditorBtn = document.getElementById('add-to-editor-btn');
 const sidebarInput = document.getElementById('sidebar-input');
 
 var getTemplate = function (message) {
   var messageModified = AiTemplates.largeContent + ' ' + message + " include headers for each section follow by paragraph of details optionally include list of items";
   return API.getJson(messageModified);
-}
-
-
-var improveAI = function (message) {
-  var messageModified = "Suggest Improvements for this:" + ' ' + message + "\n\r";
-  return callApi(messageModified);
-}
-
-var reviewAI = function (message) {
-  var messageModified = "Review this:" + ' ' + message + "\n\r";
-  return callApi(messageModified);
-}
-
-var expandAI = function (message) {
-  var messageModified = "Expand this:" + ' ' + message + "\n\r";
-  return callApi(messageModified);
-}
-
-
-var SimplifyAI = function (message) {
-  var messageModified = "Simplify this:" + ' ' + message + "\n\r";
-  return callApi(messageModified);
-}
-
-var callApi = async function (messageInput) {
-  const requestBody = {
-    prompt: messageInput,
-    max_tokens: 1500,
-    model: 'text-davinci-003',
-    temperature: 0.9,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0.6,
-    stop: ['Human:', 'AI:']
-  };
-  const response = await fetch(`/api/prompt`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestBody)
-  });
-  const data = await response.json();
-  console.log(data);
-  return data;
 }
 
 addToEditorBtn.addEventListener('click', function () {

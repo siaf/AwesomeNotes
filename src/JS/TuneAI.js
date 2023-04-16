@@ -1,6 +1,5 @@
 import API from "./api";
-
-class TuneAIRewrite {
+class TuneAI {
     static isTune = true;
 
     constructor({ api, data, config, block }) {
@@ -22,10 +21,11 @@ class TuneAIRewrite {
 
                 if (currentBlock && currentBlock.holder) {
                     var content = currentBlock.holder.innerText;
-                    var contentType = "paragraph";
+                    
                     console.log(content);
 
-                    var messageModified = "Rewrite this " + contentType + ': ' + content + "\n\r";
+                    var messageModified = this.config.promptPrefix + ': ' + content + "\n\r";
+                    
                     API.getText(messageModified).then(function (result) {
                         api.blocks.update(currentBlock.id, { text: result });
                     });
@@ -39,4 +39,4 @@ class TuneAIRewrite {
     }
 }
 
-export default TuneAIRewrite;
+export default TuneAI;
