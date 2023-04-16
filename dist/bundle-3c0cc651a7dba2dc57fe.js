@@ -604,6 +604,183 @@ var SwotBlock = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/JS/TuneRewrite.js":
+/*!*******************************!*\
+  !*** ./src/JS/TuneRewrite.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./src/JS/api.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+var TuneRewrite = /*#__PURE__*/function () {
+  function TuneRewrite(_ref) {
+    var api = _ref.api;
+    _classCallCheck(this, TuneRewrite);
+    this.api = api;
+  }
+  _createClass(TuneRewrite, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+      return {
+        icon: '<i class="material-icons">edit_square</i>',
+        label: 'AI Rewrite',
+        closeOnActivate: true,
+        onActivate: function onActivate() {
+          var api = _this.api;
+          var currentBlockIndex = _this.api.blocks.getCurrentBlockIndex();
+          var currentBlock = _this.api.blocks.getBlockByIndex(currentBlockIndex);
+          if (currentBlock && currentBlock.holder) {
+            var content = currentBlock.holder.innerText;
+            var contentType = "paragraph";
+            console.log(content);
+            var messageModified = "Rewrite this " + contentType + ': ' + content + "\n\r";
+            _api__WEBPACK_IMPORTED_MODULE_0__["default"].getText(messageModified).then(function (result) {
+              api.blocks.update(currentBlock.id, {
+                text: result
+              });
+            });
+          }
+        }
+      };
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      return {};
+    }
+  }]);
+  return TuneRewrite;
+}();
+_defineProperty(TuneRewrite, "isTune", true);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TuneRewrite);
+
+/***/ }),
+
+/***/ "./src/JS/api.js":
+/*!***********************!*\
+  !*** ./src/JS/api.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var API = /*#__PURE__*/_createClass(function API() {
+  _classCallCheck(this, API);
+});
+_defineProperty(API, "getJson", /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(messageInput) {
+    var requestBody, response, data;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          requestBody = {
+            prompt: messageInput,
+            max_tokens: 1500,
+            model: 'text-davinci-003',
+            temperature: 0.9,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0.6,
+            stop: ['Human:', 'AI:']
+          };
+          _context.next = 3;
+          return fetch("/api/prompt", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          });
+        case 3:
+          response = _context.sent;
+          _context.next = 6;
+          return response.json();
+        case 6:
+          data = _context.sent;
+          console.log(data);
+          return _context.abrupt("return", data);
+        case 9:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}());
+_defineProperty(API, "getText", /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(messageInput) {
+    var requestBody, response, data;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          requestBody = {
+            prompt: messageInput,
+            max_tokens: 1500,
+            model: 'text-davinci-003',
+            temperature: 0.9,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0.6,
+            stop: ['Human:', 'AI:']
+          };
+          _context2.next = 3;
+          return fetch("/api/prompt", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          });
+        case 3:
+          response = _context2.sent;
+          _context2.next = 6;
+          return response.text();
+        case 6:
+          data = _context2.sent;
+          console.log(data);
+          return _context2.abrupt("return", data);
+        case 9:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (API);
+
+/***/ }),
+
 /***/ "./src/JS/jason-preview.js":
 /*!*********************************!*\
   !*** ./src/JS/jason-preview.js ***!
@@ -684,8 +861,603 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var AiTemplates = /*#__PURE__*/_createClass(function AiTemplates() {
   _classCallCheck(this, AiTemplates);
 });
-_defineProperty(AiTemplates, "largeContent", "please use the following json template to answer my question \n        {\n          \"blocks\": [\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"Editor.js\",\n                \"level\": 1\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'Hey. Meet the new Editor. On this page you can see it in action \u2014 try to edit this text. Source code of the page contains the example of connection and configuration.'\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"Key features\",\n                \"level\": 3\n              }\n            },\n            {\n              \"type\": 'list',\n              \"data\": {\n                \"items\": [\n                  'It is a block-styled editor',\n                  'It returns clean data output in JSON',\n                  'Designed to be extendable and pluggable with a simple API',\n                ],\n                \"style\": 'unordered'\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"What does it mean \xABblock-styled editor\xBB\",\n                \"level\": 2\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'Workspace in classic editors is made of a single contenteditable element, used to create \"different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks\": paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor's Core.'\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'There are dozens of <a href=\"https\"://github.com/editor-js\">ready-to-use Blocks</a> and the <a \"href=\"https\"://editorjs.io/creating-a-block-tool\">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.'\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"What does it mean clean data output\",\n                \"level\": 3\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'Given data can be used as you want\": render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on.'\n              }\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'Clean data is useful to sanitize, validate and process on the backend.'\n              }\n            },\n            {\n              \"type\": 'delimiter',\n              \"data\": {}\n            },\n            {\n              \"type\": 'paragraph',\n              \"data\": {\n                \"text\": 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. \uD83D\uDE0F'\n              }\n            }\n          ]\n        }\n        \n        give me a professional, detailed, comprehensive");
+_defineProperty(AiTemplates, "largeContent", "please use the following json template to answer my question \n        {\n          \"blocks\": [\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"Editor.js\",\n                \"level\": 1\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"Hey. Meet the new Editor. On this page you can see it in action \u2014 try to edit this text. Source code of the page contains the example of connection and configuration.\"\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"Key features\",\n                \"level\": 3\n              }\n            },\n            {\n              \"type\": \"list\",\n              \"data\": {\n                \"items\": [\n                  \"It is a block-styled editor\",\n                  \"It returns clean data output in JSON\",\n                  \"Designed to be extendable and pluggable with a simple API\",\n                ],\n                \"style\": \"unordered\"\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"What does it mean \xABblock-styled editor\xBB\",\n                \"level\": 2\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"Workspace in classic editors is made of a single contenteditable element, used to create \"different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks\": paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\"s Core.\"\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"There are dozens of <a href=\"https\"://github.com/editor-js\">ready-to-use Blocks</a> and the <a \"href=\"https\"://editorjs.io/creating-a-block-tool\">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.\"\n              }\n            },\n            {\n              \"type\": \"header\",\n              \"data\": {\n                \"text\": \"What does it mean clean data output\",\n                \"level\": 3\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below\"\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"Given data can be used as you want\": render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on.\"\n              }\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"Clean data is useful to sanitize, validate and process on the backend.\"\n              }\n            },\n            {\n              \"type\": \"delimiter\",\n              \"data\": {}\n            },\n            {\n              \"type\": \"paragraph\",\n              \"data\": {\n                \"text\": \"We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. \uD83D\uDE0F\"\n              }\n            }\n          ]\n        }\n        \n        give me a professional, detailed, comprehensive");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AiTemplates);
+
+/***/ }),
+
+/***/ "./src/JS/templates/AI/editor-js-doc-templates.js":
+/*!********************************************************!*\
+  !*** ./src/JS/templates/AI/editor-js-doc-templates.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var DocTemplates = /*#__PURE__*/_createClass(function DocTemplates() {
+  _classCallCheck(this, DocTemplates);
+});
+_defineProperty(DocTemplates, "BusinessPlanSimple", {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Business Plan",
+      level: 1
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Executive Summary",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The executive summary should provide an overview of your business and your plans. It should briefly describe your company, the problem you're solving, your target market, and the unique value proposition that sets your company apart from competitors."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Market Analysis",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The market analysis should describe your industry and market. It should include information on market size, growth potential, trends, and competitive landscape. It should also provide details on your target market, including demographics, psychographics, and buying behavior."
+    }
+  }, {
+    type: 'header',
+    data: {
+      text: 'Competitive Analysis',
+      level: 3
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: 'The competitive analysis should provide a detailed look at your competitors. It should describe their strengths and weaknesses, market share, and strategies. It should also explain how your company is different and why customers should choose your company over competitors.'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Marketing Strategy",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The marketing strategy should explain how you plan to reach your target market and achieve your business goals. It should include details on your pricing, promotion, and distribution strategies. It should also describe how you plan to measure the effectiveness of your marketing efforts."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Sales Strategy",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The sales strategy should describe how you plan to sell your product or service. It should include details on your sales channels, sales team, and sales process. It should also explain how you plan to measure the effectiveness of your sales efforts."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Operations",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The operations section should describe how your business will operate. It should include details on your production process, supply chain, and inventory management. It should also describe how you plan to manage your employees and any regulatory or legal considerations."
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Financial Plan",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The financial plan should provide details on your company's finances. It should include a projected income statement, balance sheet, and cash flow statement. It should also explain how you plan to fund your business and achieve profitability."
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Projected income statement', 'Projected balance sheet', 'Projected cash flow statement', 'Funding plan', 'Profitability plan'],
+      style: 'unordered'
+    }
+  }]
+});
+_defineProperty(DocTemplates, "BusinessPlan", {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Business Plan",
+      level: 1
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Executive Summary",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The executive summary provides a brief overview of your business, highlighting the key aspects that make it unique and attractive. Below are the essential points to include:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Brief overview of your business', 'Mission statement', 'Objectives', 'Key products/services', 'Target market', 'Competitive advantage'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Company Description",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The company description delves into the details of your business, offering information about its structure, history, and goals. Here are the main points to cover:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Legal structure (e.g., sole proprietorship, LLC, corporation)', 'Founders and key team members', 'History and background', 'Vision and mission statements', 'Products/services offered', 'Unique selling proposition (USP)'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Market Analysis",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The market analysis evaluates the industry landscape and pinpoints the target market. It helps you understand market trends, opportunities, and challenges. Consider including the following:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Industry overview', 'Market size and trends', 'Target market segmentation', 'Customer needs and preferences', 'Market opportunities and challenges'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Competitive Analysis",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The competitive analysis offers insights into your competitors, their strengths and weaknesses, and their market share. It also explains how your company differentiates itself. Ensure you include:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Direct competitors', 'Indirect competitors', 'Competitive advantages and disadvantages', 'Strategies to differentiate from competitors'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Marketing and Sales Strategy",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The marketing and sales strategy section outlines your approach to reaching your target market and achieving your business goals. Be sure to address the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Marketing goals and objectives', 'Marketing channels (e.g., online, print, events)', 'Promotional tactics and campaigns', 'Pricing strategy', 'Distribution strategy', 'Sales strategy (e.g., inside sales, outside sales, partnerships)'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Operations and Management",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The operations and management section covers the day-to-day functioning of your business, as well as the organizational structure and key personnel. Make sure to include:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Management team and key personnel', 'Organizational structure', 'Hiring and staffing plans', 'Facilities and equipment requirements', 'Production processes and workflow', 'Quality control measures'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Financial Projections",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The financial projections section provides an estimate of your company's financial future, offering insights into revenue and expenses. Ensure you cover the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Revenue projections (monthly and yearly)', 'Expense projections (monthly and yearly)', 'Cash flow statement', 'Income statement', 'Balance sheet', 'Break-even analysis', 'Financial assumptions and risks'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Milestones and Timeline",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The milestones and timeline section outlines your company's key objectives, the time frame for achieving them, and the process for monitoring performance. Consider including:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Key milestones and objectives', 'Timeline for achieving milestones', 'Performance monitoring and evaluation methods'],
+      style: 'unordered'
+    }
+  }]
+});
+_defineProperty(DocTemplates, "MarketingMaterials", {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Marketing Materials",
+      level: 1
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Website",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Your website serves as the digital home for your business, providing key information and resources for potential customers. Be sure to address the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Homepage with clear value proposition', 'About Us page to share your story', 'Products/Services pages with detailed descriptions', 'Contact information and location details', 'Customer testimonials and case studies', 'Call-to-action (CTA) to guide visitors'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Brochures and Flyers",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Brochures and flyers provide a tangible way to share information about your business and offerings. Consider including the following elements:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Eye-catching design and layout', 'Clear and concise messaging', 'Product/Service descriptions and benefits', 'Visual elements (e.g., photos, illustrations)', 'Company logo and branding', 'Contact information and CTA'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Business Cards",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Business cards offer a professional way to share your contact information with potential clients and partners. Ensure you include:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Company logo and branding', 'Your name and title', 'Phone number and email address', 'Website URL', 'Physical address (if applicable)', 'Social media handles (if appropriate)'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Email Marketing",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Email marketing allows you to connect with your audience through targeted campaigns and regular updates. Consider the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Engaging subject lines', 'Personalized messaging', 'Strong visual elements and design', 'Clear CTA', 'Links to relevant content', 'Optimization for mobile devices'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Social Media",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Social media platforms provide a way to reach and engage with your audience. To make the most of these channels, consider:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Choosing the right platforms for your target audience', 'Consistent branding and messaging', 'Engaging and shareablecontent', 'Visual elements (e.g., images, videos, infographics)', 'Regular posting and updates', 'Interaction with your audience through comments and messages'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Presentations",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Presentations help you share your company's story, showcase your offerings, and pitch your ideas to clients, partners, or investors. Be sure to include:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Clear and concise messaging', 'Compelling visuals and design', 'Company background and mission', 'Product/Service overview and benefits', 'Case studies and testimonials', 'Contact information and next steps'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Video Content",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Video content can help bring your brand to life and engage with your audience in a dynamic way. When creating videos, consider:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['High-quality production and editing', 'Engaging storytelling', 'Visual branding elements', 'Clear messaging and voiceovers', 'Appropriate length based on platform and audience', 'CTA and links to relevant content'],
+      style: 'unordered'
+    }
+  }]
+});
+_defineProperty(DocTemplates, "FinancialStatements", {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Financial Statements",
+      level: 1
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Income Statement",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The income statement provides a summary of your company's revenues, expenses, and profits over a specific period. Include the following components:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Revenue (e.g., sales, other income)', 'Cost of goods sold (COGS)', 'Gross profit', 'Operating expenses (e.g., salaries, rent, marketing)', 'Operating income', 'Non-operating income/expenses', 'Taxes', 'Net income'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Balance Sheet",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The balance sheet provides a snapshot of your company's financial position at a specific point in time. It includes the following elements:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Assets (e.g., cash, accounts receivable, inventory, fixed assets)', 'Liabilities (e.g., accounts payable, short-term debt, long-term debt)', 'Owner\'s equity (e.g., common stock, retained earnings)'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Cash Flow Statement",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The cash flow statement shows how your company generates and uses cash over a specific period. It covers the following categories:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Operating activities (e.g., cash from sales, cash paid for expenses)', 'Investing activities (e.g., cash used for purchasing assets, cash from selling assets)', 'Financing activities (e.g., cash from issuing debt or equity, cash paid for debt repayment)', 'Net increase/decrease in cash'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Statement of Owner's Equity",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "The statement of owner's equity shows changes in the owner's equity over a specific period. It typically includes the following components:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Beginning owner\'s equity', 'Contributions (e.g., additional investments)', 'Withdrawals (e.g., dividends, owner\'s draw)', 'Net income or loss', 'Ending owner\'s equity'],
+      style: 'unordered'
+    }
+  }]
+});
+_defineProperty(DocTemplates, "BrandStrategy", {
+  blocks: [{
+    type: "header",
+    data: {
+      text: "Brand Strategy",
+      level: 1
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Brand Purpose and Mission",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Define your brand's purpose and mission to guide your overall strategy. Address the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Your company\'s core values', 'Your mission statement', 'The impact you want to make on customers and the world'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Target Audience",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Identify your target audience to help focus your brand's messaging and marketing efforts. Consider the following:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Demographics (e.g., age, gender, income)', 'Psychographics (e.g., values, interests, lifestyle)', 'Geographic location', 'Needs and pain points'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Unique Selling Proposition",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Define your unique selling proposition (USP) to differentiate your brand from competitors. Address the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Key product or service features', 'Benefits your brand provides', 'What sets your brand apart from competitors'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Brand Voice and Messaging",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Establish your brand's voice and messaging to create a consistent, recognizable identity. Consider the following elements:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Tone and style (e.g., professional, friendly, informative)', 'Key messages and taglines', 'Storytelling techniques'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Visual Identity",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Develop a visual identity that complements your brand's messaging and appeals to your target audience. Include the following components:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Logo and brand mark', 'Color palette', 'Typography and fonts', 'Imagery and graphics', 'Design elements and style'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Brand Touchpoints",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Identify key brand touchpoints to ensure a consistent experience for your customers. Consider the following touchpoints:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Website and online presence', 'Social media channels', 'Email marketing', 'Packaging and product design', 'Customer service and support', 'In-store experience (if applicable)', 'Events and sponsorships'],
+      style: 'unordered'
+    }
+  }, {
+    type: "header",
+    data: {
+      text: "Brand Monitoring and Improvement",
+      level: 2
+    }
+  }, {
+    type: 'paragraph',
+    data: {
+      text: "Establish a process for monitoring your brand's performance and making improvements over time. Consider the following aspects:"
+    }
+  }, {
+    type: 'list',
+    data: {
+      items: ['Key performance indicators (KPIs) and metrics', 'Feedback from customers and stakeholders', 'Regular brand audits', 'Adapting to market changes and trends'],
+      style: 'unordered'
+    }
+  }]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocTemplates);
 
 /***/ }),
 
@@ -16308,14 +17080,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _JS_SWOTBlock__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./JS/SWOTBlock */ "./src/JS/SWOTBlock.js");
 /* harmony import */ var _JS_MermaidBlock__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./JS/MermaidBlock */ "./src/JS/MermaidBlock.js");
 /* harmony import */ var _JS_MermaidTool__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./JS/MermaidTool */ "./src/JS/MermaidTool.js");
-/* harmony import */ var _JS_jason_preview__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./JS/jason-preview */ "./src/JS/jason-preview.js");
-/* harmony import */ var _styles_main_scss__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./styles/main.scss */ "./src/styles/main.scss");
-/* harmony import */ var _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./assets/sample-image.png */ "./src/assets/sample-image.png");
-/* harmony import */ var _JS_templates_AI_editor_js_ai_templates__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./JS/templates/AI/editor-js-ai-templates */ "./src/JS/templates/AI/editor-js-ai-templates.js");
+/* harmony import */ var _JS_TuneRewrite__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./JS/TuneRewrite */ "./src/JS/TuneRewrite.js");
+/* harmony import */ var _JS_jason_preview__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./JS/jason-preview */ "./src/JS/jason-preview.js");
+/* harmony import */ var _styles_main_scss__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./styles/main.scss */ "./src/styles/main.scss");
+/* harmony import */ var _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./assets/sample-image.png */ "./src/assets/sample-image.png");
+/* harmony import */ var _JS_templates_AI_editor_js_ai_templates__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./JS/templates/AI/editor-js-ai-templates */ "./src/JS/templates/AI/editor-js-ai-templates.js");
+/* harmony import */ var _JS_templates_AI_editor_js_doc_templates__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./JS/templates/AI/editor-js-doc-templates */ "./src/JS/templates/AI/editor-js-doc-templates.js");
+/* harmony import */ var _JS_api__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./JS/api */ "./src/JS/api.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
 
 
 
@@ -16410,7 +17188,7 @@ var docData = {
   }, {
     type: 'image',
     data: {
-      url: _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_20__,
+      url: _assets_sample_image_png__WEBPACK_IMPORTED_MODULE_21__,
       caption: '',
       stretched: false,
       withBorder: true,
@@ -16424,92 +17202,7 @@ var docData = {
     }
   }]
 };
-var docData = {
-  blocks: [{
-    type: "header",
-    data: {
-      text: "Executive Summary",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The executive summary should provide an overview of your business and your plans. It should briefly describe your company, the problem you're solving, your target market, and the unique value proposition that sets your company apart from competitors."
-    }
-  }, {
-    type: "header",
-    data: {
-      text: "Market Analysis",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The market analysis should describe your industry and market. It should include information on market size, growth potential, trends, and competitive landscape. It should also provide details on your target market, including demographics, psychographics, and buying behavior."
-    }
-  }, {
-    type: 'header',
-    data: {
-      text: 'Competitive Analysis',
-      level: 3
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: 'The competitive analysis should provide a detailed look at your competitors. It should describe their strengths and weaknesses, market share, and strategies. It should also explain how your company is different and why customers should choose your company over competitors.'
-    }
-  }, {
-    type: "header",
-    data: {
-      text: "Marketing Strategy",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The marketing strategy should explain how you plan to reach your target market and achieve your business goals. It should include details on your pricing, promotion, and distribution strategies. It should also describe how you plan to measure the effectiveness of your marketing efforts."
-    }
-  }, {
-    type: "header",
-    data: {
-      text: "Sales Strategy",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The sales strategy should describe how you plan to sell your product or service. It should include details on your sales channels, sales team, and sales process. It should also explain how you plan to measure the effectiveness of your sales efforts."
-    }
-  }, {
-    type: "header",
-    data: {
-      text: "Operations",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The operations section should describe how your business will operate. It should include details on your production process, supply chain, and inventory management. It should also describe how you plan to manage your employees and any regulatory or legal considerations."
-    }
-  }, {
-    type: "header",
-    data: {
-      text: "Financial Plan",
-      level: 2
-    }
-  }, {
-    type: 'paragraph',
-    data: {
-      text: "The financial plan should provide details on your company's finances. It should include a projected income statement, balance sheet, and cash flow statement. It should also explain how you plan to fund your business and achieve profitability."
-    }
-  }, {
-    type: 'list',
-    data: {
-      items: ['Projected income statement', 'Projected balance sheet', 'Projected cash flow statement', 'Funding plan', 'Profitability plan'],
-      style: 'unordered'
-    }
-  }]
-};
+var docData = _JS_templates_AI_editor_js_doc_templates__WEBPACK_IMPORTED_MODULE_23__["default"].BrandStrategy;
 
 /**
      * To initialize the Editor, create a new instance with configuration object
@@ -16602,13 +17295,15 @@ var editor = new (_editorjs_editorjs__WEBPACK_IMPORTED_MODULE_0___default())({
       "class": _JS_MermaidBlock__WEBPACK_IMPORTED_MODULE_16__["default"],
       inlineToolbar: true
     },
-    mermaid2: _JS_MermaidTool__WEBPACK_IMPORTED_MODULE_17__["default"]
+    mermaid2: _JS_MermaidTool__WEBPACK_IMPORTED_MODULE_17__["default"],
+    TuneRewrite: _JS_TuneRewrite__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   /**
    * This Tool will be used as default
    */
   // defaultBlock: 'paragraph',
 
+  tunes: ['TuneRewrite'],
   /**
    * Initial Editor data
    */
@@ -16649,7 +17344,7 @@ var readOnlyIndicator = document.getElementById('readonly-state');
  */
 saveButton.addEventListener('click', function () {
   editor.save().then(function (savedData) {
-    _JS_jason_preview__WEBPACK_IMPORTED_MODULE_18__["default"].show(savedData, document.getElementById("output"));
+    _JS_jason_preview__WEBPACK_IMPORTED_MODULE_19__["default"].show(savedData, document.getElementById("output"));
   })["catch"](function (error) {
     console.error('Saving error', error);
   });
@@ -16677,7 +17372,27 @@ toggleReadOnlyButton.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /
 var addToEditorBtn = document.getElementById('add-to-editor-btn');
 var sidebarInput = document.getElementById('sidebar-input');
 var getTemplate = function getTemplate(message) {
-  var messageModified = _JS_templates_AI_editor_js_ai_templates__WEBPACK_IMPORTED_MODULE_21__["default"].largeContent + ' ' + message + " include headers for each section follow by paragraph of details optionally include list of items";
+  var messageModified = _JS_templates_AI_editor_js_ai_templates__WEBPACK_IMPORTED_MODULE_22__["default"].largeContent + ' ' + message + " include headers for each section follow by paragraph of details optionally include list of items";
+  return _JS_api__WEBPACK_IMPORTED_MODULE_24__["default"].getJson(messageModified);
+};
+var improveAI = function improveAI(message) {
+  var messageModified = "Suggest Improvements for this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+};
+var reviewAI = function reviewAI(message) {
+  var messageModified = "Review this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+};
+var expandAI = function expandAI(message) {
+  var messageModified = "Expand this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+};
+var rewriteAI = function rewriteAI(message, contentType) {
+  var messageModified = "Rewrite this " + contentType + ': ' + message + "\n\r";
+  return callApi(messageModified);
+};
+var SimplifyAI = function SimplifyAI(message) {
+  var messageModified = "Simplify this:" + ' ' + message + "\n\r";
   return callApi(messageModified);
 };
 var callApi = /*#__PURE__*/function () {
@@ -16748,4 +17463,4 @@ addToEditorBtn.addEventListener('click', function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle-5c365151929d1cc4fcd8.js.map
+//# sourceMappingURL=bundle-3c0cc651a7dba2dc57fe.js.map
