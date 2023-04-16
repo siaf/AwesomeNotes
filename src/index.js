@@ -427,7 +427,7 @@ const addToEditorBtn = document.getElementById('add-to-editor-btn');
 const sidebarInput = document.getElementById('sidebar-input');
 
 var getTemplate = function (message) {
-  var messageModified = message + AiTemplates.largeContent;
+  var messageModified = AiTemplates.largeContent + ' ' + message  + " include headers for each section follow by paragraph of details optionally include list of items";
   return callApi(messageModified);
 }
 
