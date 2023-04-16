@@ -19,12 +19,17 @@ import SwotBlock from './JS/SWOTBlock';
 import MermaidBlock from './JS/MermaidBlock';
 import MermaidTool from './JS/MermaidTool';
 
+import TuneRewrite from './JS/TuneRewrite';
+
 import cPreview from './JS/jason-preview';
 
 import './styles/main.scss';
 import heroimage from './assets/sample-image.png';
 
 import AiTemplates from './JS/templates/AI/editor-js-ai-templates';
+import DocTemplates from './JS/templates/AI/editor-js-doc-templates';
+
+import API from './JS/api';
 
 var docData = {
   blocks: [
@@ -140,114 +145,9 @@ Alice->John: Yes... John, how are you?`,
   ]
 }
 
-var docData = {
-  blocks: [
-    {
-      type: "header",
-      data: {
-        text: "Executive Summary",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The executive summary should provide an overview of your business and your plans. It should briefly describe your company, the problem you're solving, your target market, and the unique value proposition that sets your company apart from competitors."
-      }
-    },
-    {
-      type: "header",
-      data: {
-        text: "Market Analysis",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The market analysis should describe your industry and market. It should include information on market size, growth potential, trends, and competitive landscape. It should also provide details on your target market, including demographics, psychographics, and buying behavior."
-      }
-    },
-    {
-      type: 'header',
-      data: {
-        text: 'Competitive Analysis',
-        level: 3
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: 'The competitive analysis should provide a detailed look at your competitors. It should describe their strengths and weaknesses, market share, and strategies. It should also explain how your company is different and why customers should choose your company over competitors.'
-      }
-    },
-    {
-      type: "header",
-      data: {
-        text: "Marketing Strategy",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The marketing strategy should explain how you plan to reach your target market and achieve your business goals. It should include details on your pricing, promotion, and distribution strategies. It should also describe how you plan to measure the effectiveness of your marketing efforts."
-      }
-    },
-    {
-      type: "header",
-      data: {
-        text: "Sales Strategy",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The sales strategy should describe how you plan to sell your product or service. It should include details on your sales channels, sales team, and sales process. It should also explain how you plan to measure the effectiveness of your sales efforts."
-      }
-    },
-    {
-      type: "header",
-      data: {
-        text: "Operations",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The operations section should describe how your business will operate. It should include details on your production process, supply chain, and inventory management. It should also describe how you plan to manage your employees and any regulatory or legal considerations."
-      }
-    },
-    {
-      type: "header",
-      data: {
-        text: "Financial Plan",
-        level: 2
-      }
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text: "The financial plan should provide details on your company's finances. It should include a projected income statement, balance sheet, and cash flow statement. It should also explain how you plan to fund your business and achieve profitability."
-      }
-    },
-    {
-      type: 'list',
-      data: {
-        items: [
-          'Projected income statement',
-          'Projected balance sheet',
-          'Projected cash flow statement',
-          'Funding plan',
-          'Profitability plan',
-        ],
-        style: 'unordered'
-      }
-    }
-  ]
-}
+var docData = DocTemplates.BrandStrategy;
+
+
 
 /**
      * To initialize the Editor, create a new instance with configuration object
@@ -355,7 +255,7 @@ var editor = new EditorJS({
       inlineToolbar: true
     },
     mermaid2: MermaidTool,
-
+    TuneRewrite: TuneRewrite
   },
 
   /**
@@ -363,6 +263,7 @@ var editor = new EditorJS({
    */
   // defaultBlock: 'paragraph',
 
+  tunes: ['TuneRewrite'],
   /**
    * Initial Editor data
    */
@@ -427,7 +328,29 @@ const addToEditorBtn = document.getElementById('add-to-editor-btn');
 const sidebarInput = document.getElementById('sidebar-input');
 
 var getTemplate = function (message) {
-  var messageModified = AiTemplates.largeContent + ' ' + message  + " include headers for each section follow by paragraph of details optionally include list of items";
+  var messageModified = AiTemplates.largeContent + ' ' + message + " include headers for each section follow by paragraph of details optionally include list of items";
+  return API.getJson(messageModified);
+}
+
+
+var improveAI = function (message) {
+  var messageModified = "Suggest Improvements for this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+}
+
+var reviewAI = function (message) {
+  var messageModified = "Review this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+}
+
+var expandAI = function (message) {
+  var messageModified = "Expand this:" + ' ' + message + "\n\r";
+  return callApi(messageModified);
+}
+
+
+var SimplifyAI = function (message) {
+  var messageModified = "Simplify this:" + ' ' + message + "\n\r";
   return callApi(messageModified);
 }
 
