@@ -24,8 +24,10 @@ import cPreview from './JS/jason-preview';
 import './styles/main.scss';
 import heroimage from './assets/sample-image.png';
 
+import AiTemplates from './JS/templates/AI/editor-js-ai-templates';
+
 var docData = {
-  blocks: [      
+  blocks: [
     {
       type: "header",
       data: {
@@ -120,10 +122,10 @@ var docData = {
         withBorder: true,
         withBackground: false,
       }
-    },{
-    type: "mermaid2",
+    }, {
+      type: "mermaid2",
       data: {
-        mermaidCode:`sequenceDiagram
+        mermaidCode: `sequenceDiagram
 Alice ->> Bob: Hello Bob, how are you?
 Bob-->>John: How about you John?
 Bob--x Alice: I am good thanks!
@@ -132,7 +134,7 @@ Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text d
 
 Bob-->Alice: Checking with John...
 Alice->John: Yes... John, how are you?`,
-caption: "Mermaid Diagram"
+        caption: "Mermaid Diagram"
       }
     },
   ]
@@ -252,186 +254,223 @@ var docData = {
      * @see docs/installation.md for mode details
      */
 var editor = new EditorJS({
+  /**
+   * Enable/Disable the read only mode
+   */
+  readOnly: false,
+
+  /**
+   * Wrapper of Editor
+   */
+  holder: 'editorjs',
+
+  /**
+   * Common Inline Toolbar settings
+   * - if true (or not specified), the order from 'tool' property will be used
+   * - if an array of tool names, this order will be used
+   */
+  // inlineToolbar: ['link', 'marker', 'bold', 'italic'],
+  // inlineToolbar: true,
+
+  /**
+   * Tools list
+   */
+  tools: {
     /**
-     * Enable/Disable the read only mode
+     * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
      */
-    readOnly: false,
-
-    /**
-     * Wrapper of Editor
-     */
-    holder: 'editorjs',
-
-    /**
-     * Common Inline Toolbar settings
-     * - if true (or not specified), the order from 'tool' property will be used
-     * - if an array of tool names, this order will be used
-     */
-    // inlineToolbar: ['link', 'marker', 'bold', 'italic'],
-    // inlineToolbar: true,
-
-    /**
-     * Tools list
-     */
-    tools: {
-      /**
-       * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
-       */
-      header: {
-        class: Header,
-        inlineToolbar: ['marker', 'link'],
-        config: {
-          placeholder: 'Header'
-        },
-        shortcut: 'CMD+SHIFT+H'
+    header: {
+      class: Header,
+      inlineToolbar: ['marker', 'link'],
+      config: {
+        placeholder: 'Header'
       },
-
-      /**
-       * Or pass class directly without any configuration
-       */
-      image: SimpleImage,
-
-      list: {
-        class: List,
-        inlineToolbar: true,
-        shortcut: 'CMD+SHIFT+L'
-      },
-
-      checklist: {
-        class: Checklist,
-        inlineToolbar: true,
-      },
-
-      quote: {
-        class: Quote,
-        inlineToolbar: true,
-        config: {
-          quotePlaceholder: 'Enter a quote',
-          captionPlaceholder: 'Quote\'s author',
-        },
-        shortcut: 'CMD+SHIFT+O'
-      },
-
-      warning: Warning,
-
-      marker: {
-        class: Marker,
-        shortcut: 'CMD+SHIFT+M'
-      },
-
-      code: {
-        class: CodeTool,
-        shortcut: 'CMD+SHIFT+C'
-      },
-
-      delimiter: Delimiter,
-
-      inlineCode: {
-        class: InlineCode,
-        shortcut: 'CMD+SHIFT+C'
-      },
-
-      linkTool: LinkTool,
-
-      embed: Embed,
-
-      table: {
-        class: Table,
-        inlineToolbar: true,
-        shortcut: 'CMD+ALT+T'
-      },
-      swot: {
-        class: SwotBlock,
-        inlineToolbar: true
-      },
-      chart: {
-        class: ChartBlock,
-        inlineToolbar: true
-      },
-      mermaid: {
-        class: MermaidBlock,
-        inlineToolbar: true
-      },
-      mermaid2: MermaidTool,
-      
+      shortcut: 'CMD+SHIFT+H'
     },
 
     /**
-     * This Tool will be used as default
+     * Or pass class directly without any configuration
      */
-    // defaultBlock: 'paragraph',
+    image: SimpleImage,
 
-    /**
-     * Initial Editor data
-     */
-    data: docData,
-    onReady: function () {
-
-  MermaidTool.config({ 'theme': 'base',
-  'themeVariables': {
-    'primaryColor': '#BB2528',
-    'primaryTextColor': '#fff',
-    'primaryBorderColor': '#7C0000',
-    'lineColor': '#F8B229',
-    'secondaryColor': '#006100',
-    'tertiaryColor': '#fff'
-  } });
-
-      saveButton.click();
+    list: {
+      class: List,
+      inlineToolbar: true,
+      shortcut: 'CMD+SHIFT+L'
     },
-    onChange: function (api, event) {
-      console.log('something changed', event);
-    }
-  });
 
+    checklist: {
+      class: Checklist,
+      inlineToolbar: true,
+    },
+
+    quote: {
+      class: Quote,
+      inlineToolbar: true,
+      config: {
+        quotePlaceholder: 'Enter a quote',
+        captionPlaceholder: 'Quote\'s author',
+      },
+      shortcut: 'CMD+SHIFT+O'
+    },
+
+    warning: Warning,
+
+    marker: {
+      class: Marker,
+      shortcut: 'CMD+SHIFT+M'
+    },
+
+    code: {
+      class: CodeTool,
+      shortcut: 'CMD+SHIFT+C'
+    },
+
+    delimiter: Delimiter,
+
+    inlineCode: {
+      class: InlineCode,
+      shortcut: 'CMD+SHIFT+C'
+    },
+
+    linkTool: LinkTool,
+
+    embed: Embed,
+
+    table: {
+      class: Table,
+      inlineToolbar: true,
+      shortcut: 'CMD+ALT+T'
+    },
+    swot: {
+      class: SwotBlock,
+      inlineToolbar: true
+    },
+    chart: {
+      class: ChartBlock,
+      inlineToolbar: true
+    },
+    mermaid: {
+      class: MermaidBlock,
+      inlineToolbar: true
+    },
+    mermaid2: MermaidTool,
+
+  },
 
   /**
-   * Saving button
+   * This Tool will be used as default
    */
-  const saveButton = document.getElementById('saveButton');
+  // defaultBlock: 'paragraph',
 
   /**
-   * Toggle read-only button
+   * Initial Editor data
    */
-  const toggleReadOnlyButton = document.getElementById('toggleReadOnlyButton');
-  const readOnlyIndicator = document.getElementById('readonly-state');
+  data: docData,
+  onReady: function () {
 
-  /**
-   * Saving example
-   */
-  saveButton.addEventListener('click', function () {
-    editor.save()
-      .then((savedData) => {
-        cPreview.show(savedData, document.getElementById("output"));
-      })
-      .catch((error) => {
-        console.error('Saving error', error);
-      });
+    MermaidTool.config({
+      'theme': 'base',
+      'themeVariables': {
+        'primaryColor': '#BB2528',
+        'primaryTextColor': '#fff',
+        'primaryBorderColor': '#7C0000',
+        'lineColor': '#F8B229',
+        'secondaryColor': '#006100',
+        'tertiaryColor': '#fff'
+      }
+    });
+
+    saveButton.click();
+  },
+  onChange: function (api, event) {
+    console.log('something changed', event);
+  }
+});
+
+window.editor = editor;
+
+/**
+ * Saving button
+ */
+const saveButton = document.getElementById('saveButton');
+
+/**
+ * Toggle read-only button
+ */
+const toggleReadOnlyButton = document.getElementById('toggleReadOnlyButton');
+const readOnlyIndicator = document.getElementById('readonly-state');
+
+/**
+ * Saving example
+ */
+saveButton.addEventListener('click', function () {
+  editor.save()
+    .then((savedData) => {
+      cPreview.show(savedData, document.getElementById("output"));
+    })
+    .catch((error) => {
+      console.error('Saving error', error);
+    });
+});
+
+/**
+ * Toggle read-only example
+ */
+toggleReadOnlyButton.addEventListener('click', async () => {
+  const readOnlyState = await editor.readOnly.toggle();
+
+  readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
+});
+
+const addToEditorBtn = document.getElementById('add-to-editor-btn');
+const sidebarInput = document.getElementById('sidebar-input');
+
+var getTemplate = function (message) {
+  var messageModified = message + AiTemplates.largeContent;
+  return callApi(messageModified);
+}
+
+var callApi = async function (messageInput) {
+  const requestBody = {
+    prompt: messageInput,
+    max_tokens: 1500,
+    model: 'text-davinci-003',
+    temperature: 0.9,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0.6,
+    stop: ['Human:', 'AI:']
+  };
+  const response = await fetch(`/api/prompt`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestBody)
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+addToEditorBtn.addEventListener('click', function () {
+  const enteredText = sidebarInput.value;
+  //call AI to get document template.
+  var docData = getTemplate(enteredText).then(function (data) {
+    editor.clear();
+    editor.render(data);
   });
 
-  /**
-   * Toggle read-only example
-   */
-  toggleReadOnlyButton.addEventListener('click', async () => {
-    const readOnlyState = await editor.readOnly.toggle();
+  return;
+  const currentBlock = editor.blocks.getCurrentBlock();
 
-    readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
-  });
+  if (currentBlock) {
+    editor.blocks.update(currentBlock.clientId, { text: currentBlock.text + ' ' + enteredText });
+  } else {
+    editor.blocks.insert('paragraph', { text: enteredText });
+  }
 
-  const addToEditorBtn = document.getElementById('add-to-editor-btn');
-  const sidebarInput = document.getElementById('sidebar-input');
-
-  addToEditorBtn.addEventListener('click', function () {
-    const enteredText = sidebarInput.value;
-
-    const currentBlock = editor.blocks.getCurrentBlock();
-
-    if (currentBlock) {
-      editor.blocks.update(currentBlock.clientId, { text: currentBlock.text + ' ' + enteredText });
-    } else {
-      editor.blocks.insert('paragraph', { text: enteredText });
-    }
-
-    // Clear the input field
-    sidebarInput.value = '';
-  });
+  // Clear the input field
+  sidebarInput.value = '';
+});
