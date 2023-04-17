@@ -329,11 +329,6 @@ window.editor = editor;
  */
 const saveButton = document.getElementById('saveButton');
 
-/**
- * Toggle read-only button
- */
-const toggleReadOnlyButton = document.getElementById('toggleReadOnlyButton');
-const readOnlyIndicator = document.getElementById('readonly-state');
 
 /**
  * Saving example
@@ -349,12 +344,20 @@ saveButton.addEventListener('click', function () {
 });
 
 /**
+ * Toggle read-only button
+ */
+const toggleReadOnlyButton = document.getElementById('toggleReadOnlyButton');
+const readOnlyBtnLabel = document.getElementById('labelReadOnlyButton');
+const readOnlyBtnIcon = document.getElementById('iconReadOnlyButton');
+
+/**
  * Toggle read-only example
  */
 toggleReadOnlyButton.addEventListener('click', async () => {
   const readOnlyState = await editor.readOnly.toggle();
 
-  readOnlyIndicator.textContent = readOnlyState ? 'On' : 'Off';
+  readOnlyBtnLabel.textContent = readOnlyState ? 'Read Only' : 'Edit Mode';
+  readOnlyBtnIcon.textContent = readOnlyState ? 'lock' : 'lock_open';
 });
 
 
