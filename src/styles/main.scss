@@ -144,7 +144,7 @@ main {
   margin: 0;
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  width: calc(100% - 432px);
   height: 40px;
   z-index: 190;
   border-top: 1px solid #EBECF0;
